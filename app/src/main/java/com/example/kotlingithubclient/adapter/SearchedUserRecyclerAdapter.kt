@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlingithubclient.R
+import com.example.kotlingithubclient.SearchUserFragmentDirections
 import com.example.kotlingithubclient.model.SearchedUser
 
 class SearchedUserRecyclerAdapter(var searchedUsers: List<SearchedUser>): RecyclerView.Adapter<SearchedUserRecyclerAdapter.SearchedUserViewHolder>() {
@@ -27,5 +29,14 @@ class SearchedUserRecyclerAdapter(var searchedUsers: List<SearchedUser>): Recycl
         holder.itemView.apply {
             findViewById<TextView>(R.id.searchedUsernameTextView).text = searchedUsers[position].login
         }
+        val searchedUsernameTextView = holder.itemView.findViewById<TextView>(R.id.searchedUsernameTextView)
+        searchedUsernameTextView.setOnClickListener(
+            View.OnClickListener {
+                val action = SearchUserFragmentDirections.actionSearchUserFragmentToSelectedUserFragment(
+                    searchedUsers[position].login.toString()
+                )
+                Navigation.findNavController(it).navigate(action)
+            }
+        )
     }
 }

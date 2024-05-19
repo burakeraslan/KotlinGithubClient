@@ -3,11 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".SelectedUserFragment">
 
     <TextView
+        android:id="@+id/selectedUsernameTextView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Selected" />
+        android:layout_height="wrap_content"
+        android:text="Username: " />
 
+    <TextView
+        android:id="@+id/selectedNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name: " />
+
+    <TextView
+        android:id="@+id/selectedReposTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Repos: " />
+
+    <TextView
+        android:id="@+id/selectedFollowersTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Followers: " />
+
+    <TextView
+        android:id="@+id/selectedFollowingTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Following: " />
 </LinearLayout>

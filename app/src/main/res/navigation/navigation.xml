@@ -22,5 +22,7 @@
         <action
             android:id="@+id/action_selectedUserFragment_to_searchUserFragment"
             app:destination="@id/searchUserFragment" />
+        <argument android:name="login"
+            app:argType="string" />
     </fragment>
 </navigation>
