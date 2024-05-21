@@ -1,4 +1,4 @@
-package com.example.kotlingithubclient
+package com.example.kotlingithubclient.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlingithubclient.adapter.SearchedUserRecyclerAdapter
+import com.example.kotlingithubclient.R
 import com.example.kotlingithubclient.adapter.SelectedUserRepoRecyclerAdapter
 import com.example.kotlingithubclient.model.SelectedUser
 import com.example.kotlingithubclient.model.SelectedUserRepo
@@ -53,6 +54,16 @@ class SelectedUserFragment : Fragment() {
         val adapter = SelectedUserRepoRecyclerAdapter(selectedUserRepo)
         recyclerView.adapter = adapter
 
+        selectedFollowersTextView.setOnClickListener {
+            val action = SelectedUserFragmentDirections.actionSelectedUserFragmentToFollowersFragment(selectedUsername,"followers")
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        selectedFollowingTextView.setOnClickListener {
+            val action = SelectedUserFragmentDirections.actionSelectedUserFragmentToFollowersFragment(selectedUsername,"following")
+            Navigation.findNavController(it).navigate(action)
+        }
+
         return view
     }
 
@@ -76,7 +87,9 @@ class SelectedUserFragment : Fragment() {
                         selectedFollowersTextView.text = "Followers: ${selectedUser.followers}"
                         selectedFollowingTextView.text = "Following: ${selectedUser.following}"
 
-                        fetchSelectedUserRepos(selectedUser.reposUrl.toString(), view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.selectedUserRepoRecyclerView)?.adapter as SelectedUserRepoRecyclerAdapter)
+                        fetchSelectedUserRepos(selectedUser.reposUrl.toString(), view?.findViewById<androidx.recyclerview.widget.RecyclerView>(
+                            R.id.selectedUserRepoRecyclerView
+                        )?.adapter as SelectedUserRepoRecyclerAdapter)
                     }
 
                     override fun onError(e: Throwable) {

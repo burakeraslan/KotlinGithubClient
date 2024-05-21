@@ -7,8 +7,8 @@ import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlingithubclient.R
-import com.example.kotlingithubclient.SearchUserFragmentDirections
 import com.example.kotlingithubclient.model.SearchedUser
+import com.example.kotlingithubclient.view.SearchUserFragmentDirections
 
 class SearchedUserRecyclerAdapter(var searchedUsers: List<SearchedUser>): RecyclerView.Adapter<SearchedUserRecyclerAdapter.SearchedUserViewHolder>() {
     class SearchedUserViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/searchUserFragment"
-        android:name="com.example.kotlingithubclient.SearchUserFragment"
+        android:name="com.example.kotlingithubclient.view.SearchUserFragment"
         android:label="fragment_search_user"
         tools:layout="@layout/fragment_search_user" >
         <action
@@ -16,13 +16,30 @@
     </fragment>
     <fragment
         android:id="@+id/selectedUserFragment"
-        android:name="com.example.kotlingithubclient.SelectedUserFragment"
+        android:name="com.example.kotlingithubclient.view.SelectedUserFragment"
         android:label="fragment_selected_user"
         tools:layout="@layout/fragment_selected_user" >
         <action
             android:id="@+id/action_selectedUserFragment_to_searchUserFragment"
             app:destination="@id/searchUserFragment" />
         <argument android:name="login"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_selectedUserFragment_to_followersFragment"
+            app:destination="@id/followersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/followersFragment"
+        android:name="com.example.kotlingithubclient.view.FollowersFragment"
+        android:label="fragment_followers"
+        tools:layout="@layout/fragment_followers" >
+        <action
+            android:id="@+id/action_followersFragment_to_selectedUserFragment"
+            app:destination="@id/selectedUserFragment" />
+        <argument
+            android:name="login"
+            app:argType="string" />
+        <argument android:name="type"
             app:argType="string" />
     </fragment>
 </navigation>

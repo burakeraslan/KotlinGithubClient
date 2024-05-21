@@ -1,4 +1,4 @@
-package com.example.kotlingithubclient
+package com.example.kotlingithubclient.view
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kotlingithubclient.R
 import com.example.kotlingithubclient.adapter.SearchedUserRecyclerAdapter
 import com.example.kotlingithubclient.model.SearchedResult
 import com.example.kotlingithubclient.model.SearchedUser
@@ -35,7 +36,9 @@ class SearchUserFragment : Fragment() {
         searchButton = view.findViewById(R.id.searchButton)
 
         searchButton.setOnClickListener {
-            fetchSearchedGithubUsersData(usernameEditText.text.toString(), view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.searchedUserRecyclerView).adapter as SearchedUserRecyclerAdapter)
+            fetchSearchedGithubUsersData(usernameEditText.text.toString(), view.findViewById<androidx.recyclerview.widget.RecyclerView>(
+                R.id.searchedUserRecyclerView
+            ).adapter as SearchedUserRecyclerAdapter)
         }
 
         val layoutManager = LinearLayoutManager(context)

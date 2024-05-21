@@ -1,6 +1,7 @@
-package com.example.kotlingithubclient
+package com.example.kotlingithubclient.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.kotlingithubclient.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
