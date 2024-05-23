@@ -3,28 +3,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.SearchUserFragment"
     android:orientation="vertical"
+    android:background="#FFFFFF"
     >
 
-    <EditText
-        android:id="@+id/usernameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Type your username"
-        />
 
-    <Button
-        android:id="@+id/searchButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search"/>
+        android:orientation="horizontal"
+        android:background="@drawable/search_background"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="10dp"
+        >
+
+        <EditText
+            android:id="@+id/usernameEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="Type your username"
+            android:layout_weight="1"
+            android:background="@null"
+            android:textSize="20sp"
+            android:textColor="#000000"
+            android:layout_marginLeft="20dp"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            />
+
+        <ImageButton
+            android:id="@+id/searchImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@android:drawable/ic_menu_search"
+            android:background="@drawable/search_button_background"
+            android:paddingHorizontal="20dp"
+            />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/searchedUserRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp"
+        />
 
 </LinearLayout>

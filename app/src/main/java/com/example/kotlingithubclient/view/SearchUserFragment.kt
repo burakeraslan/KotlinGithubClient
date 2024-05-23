@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlingithubclient.R
 import com.example.kotlingithubclient.adapter.SearchedUserRecyclerAdapter
@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers
 
 class SearchUserFragment : Fragment() {
     private lateinit var usernameEditText: EditText
-    private lateinit var searchButton: Button
+    private lateinit var searchImageButton: ImageButton
     private var searchedUsers: List<SearchedUser> = emptyList()
 
     private val searchedUserApiService: SearchedUserApiService = SearchedUserApiService()
@@ -33,9 +33,9 @@ class SearchUserFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_search_user, container, false)
 
         usernameEditText = view.findViewById(R.id.usernameEditText)
-        searchButton = view.findViewById(R.id.searchButton)
+        searchImageButton = view.findViewById(R.id.searchImageButton)
 
-        searchButton.setOnClickListener {
+        searchImageButton.setOnClickListener {
             fetchSearchedGithubUsersData(usernameEditText.text.toString(), view.findViewById<androidx.recyclerview.widget.RecyclerView>(
                 R.id.searchedUserRecyclerView
             ).adapter as SearchedUserRecyclerAdapter)

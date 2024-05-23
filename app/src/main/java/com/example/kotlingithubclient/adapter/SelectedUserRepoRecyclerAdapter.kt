@@ -9,7 +9,6 @@ import com.example.kotlingithubclient.model.SelectedUserRepo
 
 class SelectedUserRepoRecyclerAdapter(var selectedUserRepos: List<SelectedUserRepo>) : RecyclerView.Adapter<SelectedUserRepoRecyclerAdapter.SelectedUserRepoViewHolder>() {
     class SelectedUserRepoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectedUserRepoViewHolder {
