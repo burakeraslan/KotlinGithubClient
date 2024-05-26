@@ -1,11 +1,14 @@
 package com.example.kotlingithubclient.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlingithubclient.R
 import com.example.kotlingithubclient.adapter.FollowersRecyclerAdapter
@@ -26,11 +29,13 @@ class FollowersFragment : Fragment() {
 
     private lateinit var followersScreenUsernameTextView: TextView
     private lateinit var typeTextView: TextView
+    private lateinit var backToSelectedScreenImageButton: ImageButton
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_followers, container, false)
 
         followersScreenUsernameTextView = view.findViewById(R.id.followersScreenUsernameTextView)
         typeTextView = view.findViewById(R.id.typeTextView)
+        backToSelectedScreenImageButton = view.findViewById(R.id.backToSelectedScreenImageButton)
 
         getApiUrl()
 
@@ -41,6 +46,11 @@ class FollowersFragment : Fragment() {
         recyclerView.adapter = adapter
 
         getFollowers(adapter)
+
+        backToSelectedScreenImageButton.setOnClickListener {
+            val action = FollowersFragmentDirections.actionFollowersFragmentToSelectedUserFragment(username)
+            Navigation.findNavController(it).navigate(action)
+        }
 
         return view
     }
@@ -61,6 +71,7 @@ class FollowersFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<Followers>>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     override fun onSuccess(response: List<Followers>) {
                         followers = response
                         adapter.followers = followers

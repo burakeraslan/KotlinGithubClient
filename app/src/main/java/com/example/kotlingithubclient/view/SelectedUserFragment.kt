@@ -1,13 +1,18 @@
 package com.example.kotlingithubclient.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.kotlingithubclient.R
 import com.example.kotlingithubclient.adapter.SelectedUserRepoRecyclerAdapter
 import com.example.kotlingithubclient.model.SelectedUser
@@ -32,7 +37,13 @@ class SelectedUserFragment : Fragment() {
     private lateinit var selectedReposTextView: TextView
     private lateinit var selectedFollowersTextView: TextView
     private lateinit var selectedFollowingTextView: TextView
+    private lateinit var selectedUserProfilePhotoImageView: ImageView
 
+    private lateinit var backToSearchScreenImageButton: ImageButton
+    private lateinit var selectedFollowersLinearLayout: LinearLayout
+    private lateinit var selectedFollowingLinearLayout: LinearLayout
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +55,11 @@ class SelectedUserFragment : Fragment() {
         selectedNameTextView = view.findViewById(R.id.selectedNameTextView)
         selectedReposTextView = view.findViewById(R.id.selectedReposTextView)
         selectedUsernameTextView = view.findViewById(R.id.selectedUsernameTextView)
+        selectedUserProfilePhotoImageView = view.findViewById(R.id.selectedUserProfilePhotoImageView)
+
+        backToSearchScreenImageButton = view.findViewById(R.id.backToSearchScreenImageButton)
+        selectedFollowersLinearLayout = view.findViewById(R.id.selectedFollowersLinearLayout)
+        selectedFollowingLinearLayout = view.findViewById(R.id.selectedFollowingLinearLayout)
 
         getSelectedUser()
         fetchSelectedUser(selectedUsername)
@@ -54,12 +70,17 @@ class SelectedUserFragment : Fragment() {
         val adapter = SelectedUserRepoRecyclerAdapter(selectedUserRepo)
         recyclerView.adapter = adapter
 
-        selectedFollowersTextView.setOnClickListener {
+        backToSearchScreenImageButton.setOnClickListener {
+            val action = SelectedUserFragmentDirections.actionSelectedUserFragmentToSearchUserFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
+
+        selectedFollowersLinearLayout.setOnClickListener {
             val action = SelectedUserFragmentDirections.actionSelectedUserFragmentToFollowersFragment(selectedUsername,"followers")
             Navigation.findNavController(it).navigate(action)
         }
 
-        selectedFollowingTextView.setOnClickListener {
+        selectedFollowingLinearLayout.setOnClickListener {
             val action = SelectedUserFragmentDirections.actionSelectedUserFragmentToFollowersFragment(selectedUsername,"following")
             Navigation.findNavController(it).navigate(action)
         }
@@ -80,12 +101,15 @@ class SelectedUserFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<SelectedUser>() {
+                    @SuppressLint("SetTextI18n")
                     override fun onSuccess(selectedUser: SelectedUser) {
-                        selectedUsernameTextView.text = "Username: ${selectedUsername}"
-                        selectedNameTextView.text = "Name: ${selectedUser.name ?: "N/A"}"
-                        selectedReposTextView.text = "Public Repos: ${selectedUser.publicRepos}"
-                        selectedFollowersTextView.text = "Followers: ${selectedUser.followers}"
-                        selectedFollowingTextView.text = "Following: ${selectedUser.following}"
+                        selectedUsernameTextView.text = selectedUser.login
+                        selectedNameTextView.text = selectedUser.name
+                        selectedReposTextView.text = selectedUser.publicRepos.toString()
+                        selectedFollowersTextView.text = selectedUser.followers.toString()
+                        selectedFollowingTextView.text = selectedUser.following.toString()
+
+                        setProfilePhoto(selectedUser.avatarUrl.toString())
 
                         fetchSelectedUserRepos(selectedUser.reposUrl.toString(), view?.findViewById<androidx.recyclerview.widget.RecyclerView>(
                             R.id.selectedUserRepoRecyclerView
@@ -105,6 +129,7 @@ class SelectedUserFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<SelectedUserRepo>>() {
+                    @SuppressLint("NotifyDataSetChanged")
                     override fun onSuccess(selectedUserRepos: List<SelectedUserRepo>) {
                         selectedUserRepo = selectedUserRepos
                         adapter.selectedUserRepos = selectedUserRepo
@@ -116,6 +141,12 @@ class SelectedUserFragment : Fragment() {
                     }
                 })
         )
+    }
+
+    fun setProfilePhoto(profilePhotoUrl: String) {
+        Glide.with(this)
+            .load(profilePhotoUrl)
+            .into(selectedUserProfilePhotoImageView)
     }
 
     override fun onDestroyView() {
